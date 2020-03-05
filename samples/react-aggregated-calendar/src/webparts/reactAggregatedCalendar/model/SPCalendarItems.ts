@@ -6,6 +6,7 @@
  */
 export interface SPCalendarItemsValue {
   Id: number;
+  Attorneys: any;
   Title: string;
   Location?: any;
   EventDate: Date;

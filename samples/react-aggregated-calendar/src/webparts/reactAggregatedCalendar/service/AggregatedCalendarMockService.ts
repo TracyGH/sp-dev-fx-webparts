@@ -29,6 +29,7 @@ export class AggregatedCalendarMockService implements IAggregatedCalendarService
         {
           id: 1,
           title: "Lunch",
+          attorneys: 'Rule 11<div><strong><font color="#ff0000">STRUMPF FOR</font></strong> BLUM</div>',
           start: moment().add(1, 'days'),
           end: moment().add(1, 'days').add(1, "h"),
           color: "blue",
@@ -40,6 +41,7 @@ export class AggregatedCalendarMockService implements IAggregatedCalendarService
         {
           id: 2,
           title: "Lunch & Learn",
+          attorneys: 'Rule 11<div><strong><font color="#ff0000">STRUMPF FOR</font></strong> BLUM</div>',
           start: moment(),
           end: moment().add(1, "h"),
           color: "blue",
@@ -51,6 +53,7 @@ export class AggregatedCalendarMockService implements IAggregatedCalendarService
         {
           id: 3,
           title: "Town Hall",
+          attorneys: 'Rule 11<div><strong><font color="#ff0000">STRUMPF FOR</font></strong> BLUM</div>',
           start: moment("2018-07-08T21:30:00.000Z"),
           end: moment("2018-07-08T22:30:00.000Z"),
           color: "red",
@@ -62,6 +65,7 @@ export class AggregatedCalendarMockService implements IAggregatedCalendarService
         {
           id: 4,
           title: "Team Outing",
+          attorneys: 'Rule 11<div><strong><font color="#ff0000">STRUMPF FOR</font></strong> BLUM</div>',
           start: moment("2018-07-12T00:00:00.000Z"),
           end: moment("2018-07-12T23:59:00.000Z"),
           color: "red",

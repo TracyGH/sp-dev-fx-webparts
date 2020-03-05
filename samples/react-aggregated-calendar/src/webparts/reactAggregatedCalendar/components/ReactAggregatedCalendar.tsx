@@ -56,6 +56,7 @@ export default class ReactAggregatedCalendar
       selectedEvent: {
         id: 0,
         title: '',
+        attorneys: null,
         color: '',
         start: moment(),
         end: moment(),
@@ -102,7 +103,7 @@ export default class ReactAggregatedCalendar
     // Render the Legend for the Calendar Events
     calendarLegend = this.props.selectedCalendarLists.map((calendar) => {
       let calendarLegendColor = {
-        'background-color': `${calendar.Color}`
+        'backgroundColor': `${calendar.Color}`
       };
       return (
         <div className={styles.outerLegendDiv} title={calendar.CalendarTitle}>
@@ -150,11 +151,11 @@ export default class ReactAggregatedCalendar
               <i className="ms-Icon ms-Icon--Clear"></i>
             </button>
             <div className={css(styles.msCalloutheader, 'ms-fontColor-white')}>
-              <p className={styles.msCallouttitle}>{this.state.selectedEvent.title}</p>
+              <p className={css(styles.msCallouttitle, 'ms-fontColor-white')}>{this.state.selectedEvent.title}</p>
             </div>
             <div className={css(styles.msCalloutinner, styles.calloutInnerEventContent)}>
               <div className="ms-Callout-content">
-                <p className={styles.msCalloutsubText} dangerouslySetInnerHTML={this.createMarkup(this.state.selectedEvent.description)} />
+                <p className={styles.msCalloutsubText} dangerouslySetInnerHTML={this.createMarkup(this.state.selectedEvent.attorneys)} />
                 <p className={styles.msCalloutsubText}>
                   <Label>{strings.StartTimeLabel}{this.state.selectedEvent.start.format(this.props.dateFormat)} </Label>
                   {
@@ -238,6 +239,7 @@ export default class ReactAggregatedCalendar
         selectedEvent: {
           id: eventObj.id,
           title: eventObj.title,
+          attorneys: eventObj.attorneys,
           color: eventObj.color,
           start: moment(eventObj.start),
           end: moment(eventObj.end),
@@ -271,7 +273,7 @@ export default class ReactAggregatedCalendar
    * @memberof ReactAggregatedCalendar
    */
   private createMarkup(description: string) {
-    return { __html: description };
+    return { __html: description.replace(/[\n\r]/g,"<br/>") };
   }
 
 }
