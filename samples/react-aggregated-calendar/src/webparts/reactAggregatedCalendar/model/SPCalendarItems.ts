@@ -13,6 +13,7 @@ export interface SPCalendarItemsValue {
   EndDate: Date;
   Description?: any;
   fAllDayEvent?: boolean;
+  fRecurrence?: boolean;
   Category?: string;
 }
 

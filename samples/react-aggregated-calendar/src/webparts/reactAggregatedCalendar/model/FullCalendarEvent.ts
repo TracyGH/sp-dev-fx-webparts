@@ -14,6 +14,7 @@ export interface FullCalendarEvent {
   end: moment.Moment;
   color: string;
   allDay: boolean;
+  recurrence: boolean;
   description: string;
   location: string;
   category: string;

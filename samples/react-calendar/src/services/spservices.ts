@@ -467,7 +467,7 @@ export default class spservices {
       const results = await web.lists.getById(listId).usingCaching().renderListDataAsStream(
         {
           DatesInUtc: true,
-          ViewXml: `<View><ViewFields><FieldRef Name='RecurrenceData'/><FieldRef Name='Duration'/><FieldRef Name='Author'/><FieldRef Name='Category'/><FieldRef Name='Description'/><FieldRef Name='ParticipantsPicker'/><FieldRef Name='Geolocation'/><FieldRef Name='ID'/><FieldRef Name='EndDate'/><FieldRef Name='EventDate'/><FieldRef Name='ID'/><FieldRef Name='Location'/><FieldRef Name='Title'/><FieldRef Name='fAllDayEvent'/><FieldRef Name='EventType'/><FieldRef Name='UID' /><FieldRef Name='fRecurrence' /></ViewFields>
+          ViewXml: `<View><ViewFields><FieldRef Name='RecurrenceData'/><FieldRef Name='Duration'/><FieldRef Name='Author'/><FieldRef Name='Category'/><FieldRef Name='Description'/><FieldRef Name='Attorneys'/><FieldRef Name='ParticipantsPicker'/><FieldRef Name='Geolocation'/><FieldRef Name='ID'/><FieldRef Name='EndDate'/><FieldRef Name='EventDate'/><FieldRef Name='ID'/><FieldRef Name='Location'/><FieldRef Name='Title'/><FieldRef Name='fAllDayEvent'/><FieldRef Name='EventType'/><FieldRef Name='UID' /><FieldRef Name='fRecurrence' /></ViewFields>
           <Query>
           <Where>
             <And>
@@ -504,19 +504,23 @@ export default class spservices {
           for (const attendee of event.ParticipantsPicker) {
             attendees.push(parseInt(attendee.id));
           }
-
-
-
+          let startDate = new Date(moment(event.EventDate).toISOString());
+          let endDate = new Date(moment(event.EndDate).toISOString());
+          //If the event is an All Day event, we need to modify the constructor.  
+          //Not sure why, probably has something to do with the changes invoked by toISOString().
+          if (event.fAllDayEvent == "Yes") {
+            startDate = new Date(moment(event.EventDate, 'YYYY/MM/DD HH:mm').toISOString());
+            endDate = new Date(moment(event.EndDate, 'YYYY/MM/DD HH:mm').toISOString());
+          }
           events.push({
             Id: event.ID,
             ID: event.ID,
             EventType: event.EventType,
             title: await this.deCodeHtmlEntities(event.Title),
             Description: event.Description,
-
-            EventDate: new Date(moment(event.EventDate).subtract((siteTimeZoneHours), 'hour').toISOString()),
-
-            EndDate: new Date(moment(event.EndDate).subtract(siteTimeZoneHours, 'hour').toISOString()),
+            Attorneys: await this.deCodeHtmlEntities(event.Attorneys),
+            EventDate: startDate,
+            EndDate: endDate,
             location: event.Location,
             ownerEmail: event.Author[0].email,
             ownerPhoto: userPictureUrl ?

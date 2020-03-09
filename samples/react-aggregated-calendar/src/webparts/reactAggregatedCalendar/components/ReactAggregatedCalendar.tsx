@@ -63,6 +63,7 @@ export default class ReactAggregatedCalendar
         description: '',
         location: '',
         allDay: false,
+        recurrence: false,
         category: ''
       },
       directionalHint: DirectionalHint.bottomCenter,
@@ -246,6 +247,7 @@ export default class ReactAggregatedCalendar
           description: eventObj.description,
           location: eventObj.location,
           allDay: eventObj.allDay,
+          recurrence: eventObj.recurrence,
           category: eventObj.category
         },
         EventElement: jsEvent.toElement

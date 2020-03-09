@@ -90,7 +90,7 @@ export default class Calendar extends React.Component<ICalendarProps, ICalendarS
    * @memberof Calendar
    */
   private onSelectEvent(event: any) {
-    this.setState({ showDialog: true, selectedEvent: event, panelMode: IPanelModelEnum.edit });
+    // this.setState({ showDialog: true, selectedEvent: event, panelMode: IPanelModelEnum.edit });
   }
 
   /**
@@ -196,13 +196,16 @@ export default class Calendar extends React.Component<ICalendarProps, ICalendarS
               <div className={styles.DocumentCardDetails}>
                 <DocumentCardTitle title={event.title} shouldTruncate={true} className={styles.DocumentCardTitle} styles={{ root: { color: event.color} }} />
               </div>
+              <div className={styles.DocumentCardTitleTime}>
+                <span dangerouslySetInnerHTML={ { __html: event.Attorneys.replace(/[\n\r]/g,"<br/>") } }/>
+              </div>
               {
                 moment(event.EventDate).format('YYYY/MM/DD') !== moment(event.EndDate).format('YYYY/MM/DD') ?
                   <span className={styles.DocumentCardTitleTime}>{moment(event.EventDate).format('dddd')} - {moment(event.EndDate).format('dddd')} </span>
                   :
                   <span className={styles.DocumentCardTitleTime}>{moment(event.EventDate).format('dddd')} </span>
               }
-              <span className={styles.DocumentCardTitleTime}>{moment(event.EventDate).format('HH:mm')}H - {moment(event.EndDate).format('HH:mm')}H</span>
+              <span className={styles.DocumentCardTitleTime}>{moment(event.EventDate).format('LT')} - {moment(event.EndDate).format('LT')}</span>
               <Icon iconName='MapPin' className={styles.locationIcon} style={{ color: event.color }} />
               <DocumentCardTitle
                 title={`${event.location}`}
@@ -373,4 +376,8 @@ export default class Calendar extends React.Component<ICalendarProps, ICalendarS
       </Customizer>
     );
   }
+
+  private createMarkup(description: string) {
+    return { __html: description.replace(/[\n\r]/g,"<br/>") };
+  }  
 }

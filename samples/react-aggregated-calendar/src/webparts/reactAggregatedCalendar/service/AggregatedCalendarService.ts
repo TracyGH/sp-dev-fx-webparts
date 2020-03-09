@@ -43,14 +43,16 @@ export class AggregatedCalendarService implements IAggregatedCalendarService {
   public getEventsForCalendar(calendarRestApi: string, calendarColor: string, startDate: string, endDate: string): Promise<any[]> {
     return new Promise<FullCalendarEvent[]>((resolve, reject) => {
       let _webRestApi: string = calendarRestApi +
-        '?$Select=Title,EventDate,EndDate,Location,Description,Category,Attorneys,fAllDayEvent&$filter=((EventDate ge \''
-        + startDate + '\' and EventDate le \'' + endDate + '\'))';
+        '?$Select=RecurrenceID,MasterSeriesItemID,Id,ParticipantsPickerId,EventType,RecurrenceData,Duration,Title,EventDate,EndDate,Location,Description,Category,Attorneys,fAllDayEvent,fRecurrence&$filter=((EventDate ge \''
+        + moment(startDate).subtract(1, 'd').toISOString() + '\' and EventDate le \'' + endDate + '\'))&$orderby=EventDate';
       Log.info("getEventsForCalendar()", "REST API : " + calendarRestApi, this._serviceScope);
       this._spHttpClient.get(_webRestApi, SPHttpClient.configurations.v1)
         .then((response: SPHttpClientResponse) => {
           response.json().then((spEvents: SPCalendarItems) => {
             Log.verbose("getEventsForCalendar()", JSON.stringify(spEvents), this._serviceScope);
             let fullCalendarEvents: FullCalendarEvent[] = [];
+
+
 
             // Convert the SharePoint Events into compatible Full Calendar Events
             spEvents.value.forEach((spEvent) => {
@@ -59,14 +61,23 @@ export class AggregatedCalendarService implements IAggregatedCalendarService {
                 id: spEvent.Id,
                 title: spEvent.Title,
                 attorneys: spEvent.Attorneys ? this.deCodeHtmlEntities(spEvent.Attorneys) : "",
-                start: moment(spEvent.EventDate),
-                end: moment(spEvent.EndDate),
+                // If the event is an All Day event, add 1 day without Timezone to the start date
+                start: spEvent.fAllDayEvent ? moment(spEvent.EventDate).add(1, 'd') : moment(spEvent.EventDate),
+                // If the event is an All Day event, add 1 day without Timezone to the end date
+                end: spEvent.fAllDayEvent ? moment(spEvent.EndDate).add(1, 'd') : moment(spEvent.EndDate),
                 color: calendarColor,
                 allDay: spEvent.fAllDayEvent,
+                recurrence: spEvent.fRecurrence,
                 description: spEvent.Description ? this.deCodeHtmlEntities(spEvent.Description) : "",
                 location: spEvent.Location || '',
                 category: spEvent.Category || ''
               });
+
+                // // If the event is an All Day event, add 1 day without Timezone to the start date
+                // start: !item.isAllDay ? currentStartDate.clone().tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format() : moment(currentStartDate).add(1, 'd').toISOString(),
+                
+                // // If the event is an All Day event, add 1 day without Timezone to the end date
+                // end: !item.isAllDay ? currentEndDate.clone().tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format() : moment(currentEndDate).add(1, 'd').toISOString(),              
 
             });
             Log.info("getEventsForCalendar()", "Returning Full Calendar Events ", this._serviceScope);

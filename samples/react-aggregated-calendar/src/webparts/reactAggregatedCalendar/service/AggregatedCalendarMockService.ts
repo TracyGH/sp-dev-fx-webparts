@@ -34,6 +34,7 @@ export class AggregatedCalendarMockService implements IAggregatedCalendarService
           end: moment().add(1, 'days').add(1, "h"),
           color: "blue",
           allDay: false,
+          recurrence: false,
           description: "",
           location: "18223 Kilmacolm Drive, Richmond, TX 77407",
           category: "Get-together"
@@ -46,6 +47,7 @@ export class AggregatedCalendarMockService implements IAggregatedCalendarService
           end: moment().add(1, "h"),
           color: "blue",
           allDay: false,
+          recurrence: false,
           description: "<p>Lunch &amp; Learn Session</p>\r\n",
           location: "Microsoft Store, 5015 Westheimer Rd Ste A2421, Houston, TX, United States",
           category: "Meeting"
@@ -58,6 +60,7 @@ export class AggregatedCalendarMockService implements IAggregatedCalendarService
           end: moment("2018-07-08T22:30:00.000Z"),
           color: "red",
           allDay: false,
+          recurrence: false,
           description: "",
           location: "Deer Park, Texas, United States",
           category: ""
@@ -70,6 +73,7 @@ export class AggregatedCalendarMockService implements IAggregatedCalendarService
           end: moment("2018-07-12T23:59:00.000Z"),
           color: "red",
           allDay: false,
+          recurrence: false,
           description: "",
           location: "Seaworld San Antonio, San Antonio, Texas, United States",
           category: ""

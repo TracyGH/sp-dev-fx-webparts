@@ -3,6 +3,7 @@ export interface IEventData {
   ID?:number;
   title: string;
   Description?: any;
+  Attorneys?: any;
   location?:string;
   EventDate: Date;
   EndDate: Date;

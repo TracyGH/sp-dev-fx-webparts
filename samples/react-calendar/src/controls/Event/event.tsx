@@ -868,321 +868,321 @@ export class Event extends React.Component<IEventProps, IEventState> {
 
     const { editorState } = this.state;
 
-    return (
-      <div>
-        <Panel
-          isOpen={this.props.showPanel}
-          onDismiss={this.hidePanel}
-          type={PanelType.medium}
-          headerText={strings.EventPanelTitle}
-          isFooterAtBottom={true}
-          onRenderFooterContent={this.onRenderFooterContent}
-        >
-          <div style={{ width: '100%' }}>
-            {
-              this.state.hasError &&
-              <MessageBar messageBarType={MessageBarType.error}>
-                {this.state.errorMessage}
-              </MessageBar>
-            }
-            {
-              this.state.isloading && (
-                <Spinner size={SpinnerSize.large} />
-              )
-            }
-            {
-              !this.state.isloading &&
-              <div>
-                {
-                  (this.state.eventData && (this.state.eventData.EventType !== "0" && this.state.showRecurrenceSeriesInfo !== true)) ?
-                  <div>
-                      <h2 style={{ display: 'inline-block', verticalAlign: 'top' }}>{ strings.recurrenceEventLabel }</h2>
-                      { this.state.recurrenceDescription ? <span style={{ display: 'block' }} >{ this.state.recurrenceDescription }</span> : null }
-                      <DefaultButton
-                        style={{ display: 'inline-block', marginLeft: '330px', verticalAlign: 'top', width: 'auto' }}
-                        iconProps={{ iconName: 'RecurringEvent' }}
-                        allowDisabledFocus={true}
-                        onClick={this.onEditRecurrence}
-                      >
-                        { strings.editRecurrenceSeries }
-                     </DefaultButton>
+    return (<div></div>
+      // <div>
+      //   <Panel
+      //     isOpen={this.props.showPanel}
+      //     onDismiss={this.hidePanel}
+      //     type={PanelType.medium}
+      //     headerText={strings.EventPanelTitle}
+      //     isFooterAtBottom={true}
+      //     onRenderFooterContent={this.onRenderFooterContent}
+      //   >
+      //     <div style={{ width: '100%' }}>
+      //       {
+      //         this.state.hasError &&
+      //         <MessageBar messageBarType={MessageBarType.error}>
+      //           {this.state.errorMessage}
+      //         </MessageBar>
+      //       }
+      //       {
+      //         this.state.isloading && (
+      //           <Spinner size={SpinnerSize.large} />
+      //         )
+      //       }
+      //       {
+      //         !this.state.isloading &&
+      //         <div>
+      //           {
+      //             (this.state.eventData && (this.state.eventData.EventType !== "0" && this.state.showRecurrenceSeriesInfo !== true)) ?
+      //             <div>
+      //                 <h2 style={{ display: 'inline-block', verticalAlign: 'top' }}>{ strings.recurrenceEventLabel }</h2>
+      //                 { this.state.recurrenceDescription ? <span style={{ display: 'block' }} >{ this.state.recurrenceDescription }</span> : null }
+      //                 <DefaultButton
+      //                   style={{ display: 'inline-block', marginLeft: '330px', verticalAlign: 'top', width: 'auto' }}
+      //                   iconProps={{ iconName: 'RecurringEvent' }}
+      //                   allowDisabledFocus={true}
+      //                   onClick={this.onEditRecurrence}
+      //                 >
+      //                   { strings.editRecurrenceSeries }
+      //                </DefaultButton>
 
-                    </div>
-                    : ''
-                }
-                <div style={{ marginTop: 10 }} >
-                  <TextField
-                    label={strings.EventTitleLabel}
-                    value={this.state.eventData ? this.state.eventData.title : ''}
-                    onGetErrorMessage={this.onGetErrorMessageTitle}
-                    deferredValidationTime={500}
-                    disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
-                  />
+      //               </div>
+      //               : ''
+      //           }
+      //           <div style={{ marginTop: 10 }} >
+      //             <TextField
+      //               label={strings.EventTitleLabel}
+      //               value={this.state.eventData ? this.state.eventData.title : ''}
+      //               onGetErrorMessage={this.onGetErrorMessageTitle}
+      //               deferredValidationTime={500}
+      //               disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
+      //             />
 
-                </div>
-                <div>
-                  <Dropdown
-                    label={strings.CategoryLabel}
-                    selectedKey={this.state.eventData && this.state.eventData.Category ? this.state.eventData.Category : ''}
-                    onChange={this.onCategoryChanged}
-                    options={this.categoryDropdownOption}
-                    placeholder={strings.CategoryPlaceHolder}
-                    disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
-                  />
-                </div>
-                <div style={{ display: 'inline-block', verticalAlign: 'top', paddingRight: 10 }}>
-                  <DatePicker
-                    isRequired={false}
-                    strings={DayPickerStrings}
-                    placeholder={strings.StartDatePlaceHolder}
-                    ariaLabel={strings.StartDatePlaceHolder}
-                    allowTextInput={true}
-                    value={this.state.startDate}
-                    label={strings.StartDateLabel}
-                    onSelectDate={this.onSelectDateStart}
-                    formatDate={toLocaleShortDateString}
-                    disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
-                    hidden={this.state.showRecurrenceSeriesInfo}
-                  />
-                </div>
-                <div style={{ display: 'inline-block', verticalAlign: 'top', paddingRight: 10 }}>
-                  <Dropdown
-                    selectedKey={this.state.startSelectedHour.key}
-                    onChange={this.onStartChangeHour}
-                    label={strings.StartHourLabel}
-                    disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
-                    options={[
-                      { key: '00', text: '00' },
-                      { key: '01', text: '01' },
-                      { key: '02', text: '02' },
-                      { key: '03', text: '03' },
-                      { key: '04', text: '04' },
-                      { key: '05', text: '05' },
-                      { key: '06', text: '06' },
-                      { key: '07', text: '07' },
-                      { key: '08', text: '08' },
-                      { key: '09', text: '09' },
-                      { key: '10', text: '10' },
-                      { key: '11', text: '11' },
-                      { key: '12', text: '12' },
-                      { key: '13', text: '13' },
-                      { key: '14', text: '14' },
-                      { key: '15', text: '15' },
-                      { key: '16', text: '16' },
-                      { key: '17', text: '17' },
-                      { key: '18', text: '18' },
-                      { key: '19', text: '19' },
-                      { key: '20', text: '20' },
-                      { key: '21', text: '21' },
-                      { key: '22', text: '22' },
-                      { key: '23', text: '23' }
-                    ]}
-                  />
-                </div>
-                <div style={{ display: 'inline-block', verticalAlign: 'top', }}>
-                  <Dropdown
-                    label={strings.StartMinLabel}
-                    selectedKey={this.state.startSelectedMin.key}
-                    onChange={this.onStartChangeMin}
-                    disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
-                    options={[
-                      { key: '00', text: '00' },
-                      { key: '05', text: '05' },
-                      { key: '10', text: '10' },
-                      { key: '15', text: '15' },
-                      { key: '20', text: '20' },
-                      { key: '25', text: '25' },
-                      { key: '30', text: '30' },
-                      { key: '35', text: '35' },
-                      { key: '40', text: '40' },
-                      { key: '45', text: '45' },
-                      { key: '50', text: '50' },
-                      { key: '55', text: '55' }
-                    ]}
-                  />
-                </div>
-                <br />
-                <div style={{ display: 'inline-block', verticalAlign: 'top', paddingRight: 10 }}>
-                  <DatePicker
-                    isRequired={false}
-                    strings={DayPickerStrings}
-                    placeholder={strings.EndDatePlaceHolder}
-                    ariaLabel={strings.EndDatePlaceHolder}
-                    allowTextInput={true}
-                    value={this.state.endDate}
-                    label={strings.EndDateLabel}
-                    onSelectDate={this.onSelectDateEnd}
-                    formatDate={toLocaleShortDateString}
-                    disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
-                    hidden={this.state.showRecurrenceSeriesInfo}
-                  />
-                </div>
-                <div style={{ display: 'inline-block', verticalAlign: 'top', paddingRight: 10 }}>
-                  <Dropdown
-                    selectedKey={this.state.endSelectedHour.key}
-                    onChange={this.onEndChangeHour}
-                    label={strings.EndHourLabel}
-                    disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
-                    options={[
-                      { key: '00', text: '00' },
-                      { key: '01', text: '01' },
-                      { key: '02', text: '02' },
-                      { key: '03', text: '03' },
-                      { key: '04', text: '04' },
-                      { key: '05', text: '05' },
-                      { key: '06', text: '06' },
-                      { key: '07', text: '07' },
-                      { key: '08', text: '08' },
-                      { key: '09', text: '09' },
-                      { key: '10', text: '10' },
-                      { key: '11', text: '11' },
-                      { key: '12', text: '12' },
-                      { key: '13', text: '13' },
-                      { key: '14', text: '14' },
-                      { key: '15', text: '15' },
-                      { key: '16', text: '16' },
-                      { key: '17', text: '17' },
-                      { key: '18', text: '18' },
-                      { key: '19', text: '19' },
-                      { key: '20', text: '20' },
-                      { key: '21', text: '21' },
-                      { key: '22', text: '22' },
-                      { key: '23', text: '23' }
-                    ]}
-                  />
-                </div>
-                <div style={{ display: 'inline-block', verticalAlign: 'top', }}>
-                  <Dropdown
-                    label={strings.EndMinLabel}
-                    selectedKey={this.state.endSelectedMin.key}
-                    onChange={this.onEndChangeMin}
-                    disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
-                    options={[
-                      { key: '00', text: '00' },
-                      { key: '05', text: '05' },
-                      { key: '10', text: '10' },
-                      { key: '15', text: '15' },
-                      { key: '20', text: '20' },
-                      { key: '25', text: '25' },
-                      { key: '30', text: '30' },
-                      { key: '35', text: '35' },
-                      { key: '40', text: '40' },
-                      { key: '45', text: '45' },
-                      { key: '50', text: '50' },
-                      { key: '55', text: '55' },
-                      { key: '59', text: '59' }
-                    ]}
-                  />
-                </div>
-                <Label>{this.state.siteRegionalSettings ? this.state.siteRegionalSettings.Description : ''}</Label>
-                <br />
-                {
+      //           </div>
+      //           <div>
+      //             <Dropdown
+      //               label={strings.CategoryLabel}
+      //               selectedKey={this.state.eventData && this.state.eventData.Category ? this.state.eventData.Category : ''}
+      //               onChange={this.onCategoryChanged}
+      //               options={this.categoryDropdownOption}
+      //               placeholder={strings.CategoryPlaceHolder}
+      //               disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
+      //             />
+      //           </div>
+      //           <div style={{ display: 'inline-block', verticalAlign: 'top', paddingRight: 10 }}>
+      //             <DatePicker
+      //               isRequired={false}
+      //               strings={DayPickerStrings}
+      //               placeholder={strings.StartDatePlaceHolder}
+      //               ariaLabel={strings.StartDatePlaceHolder}
+      //               allowTextInput={true}
+      //               value={this.state.startDate}
+      //               label={strings.StartDateLabel}
+      //               onSelectDate={this.onSelectDateStart}
+      //               formatDate={toLocaleShortDateString}
+      //               disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
+      //               hidden={this.state.showRecurrenceSeriesInfo}
+      //             />
+      //           </div>
+      //           <div style={{ display: 'inline-block', verticalAlign: 'top', paddingRight: 10 }}>
+      //             <Dropdown
+      //               selectedKey={this.state.startSelectedHour.key}
+      //               onChange={this.onStartChangeHour}
+      //               label={strings.StartHourLabel}
+      //               disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
+      //               options={[
+      //                 { key: '00', text: '00' },
+      //                 { key: '01', text: '01' },
+      //                 { key: '02', text: '02' },
+      //                 { key: '03', text: '03' },
+      //                 { key: '04', text: '04' },
+      //                 { key: '05', text: '05' },
+      //                 { key: '06', text: '06' },
+      //                 { key: '07', text: '07' },
+      //                 { key: '08', text: '08' },
+      //                 { key: '09', text: '09' },
+      //                 { key: '10', text: '10' },
+      //                 { key: '11', text: '11' },
+      //                 { key: '12', text: '12' },
+      //                 { key: '13', text: '13' },
+      //                 { key: '14', text: '14' },
+      //                 { key: '15', text: '15' },
+      //                 { key: '16', text: '16' },
+      //                 { key: '17', text: '17' },
+      //                 { key: '18', text: '18' },
+      //                 { key: '19', text: '19' },
+      //                 { key: '20', text: '20' },
+      //                 { key: '21', text: '21' },
+      //                 { key: '22', text: '22' },
+      //                 { key: '23', text: '23' }
+      //               ]}
+      //             />
+      //           </div>
+      //           <div style={{ display: 'inline-block', verticalAlign: 'top', }}>
+      //             <Dropdown
+      //               label={strings.StartMinLabel}
+      //               selectedKey={this.state.startSelectedMin.key}
+      //               onChange={this.onStartChangeMin}
+      //               disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
+      //               options={[
+      //                 { key: '00', text: '00' },
+      //                 { key: '05', text: '05' },
+      //                 { key: '10', text: '10' },
+      //                 { key: '15', text: '15' },
+      //                 { key: '20', text: '20' },
+      //                 { key: '25', text: '25' },
+      //                 { key: '30', text: '30' },
+      //                 { key: '35', text: '35' },
+      //                 { key: '40', text: '40' },
+      //                 { key: '45', text: '45' },
+      //                 { key: '50', text: '50' },
+      //                 { key: '55', text: '55' }
+      //               ]}
+      //             />
+      //           </div>
+      //           <br />
+      //           <div style={{ display: 'inline-block', verticalAlign: 'top', paddingRight: 10 }}>
+      //             <DatePicker
+      //               isRequired={false}
+      //               strings={DayPickerStrings}
+      //               placeholder={strings.EndDatePlaceHolder}
+      //               ariaLabel={strings.EndDatePlaceHolder}
+      //               allowTextInput={true}
+      //               value={this.state.endDate}
+      //               label={strings.EndDateLabel}
+      //               onSelectDate={this.onSelectDateEnd}
+      //               formatDate={toLocaleShortDateString}
+      //               disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
+      //               hidden={this.state.showRecurrenceSeriesInfo}
+      //             />
+      //           </div>
+      //           <div style={{ display: 'inline-block', verticalAlign: 'top', paddingRight: 10 }}>
+      //             <Dropdown
+      //               selectedKey={this.state.endSelectedHour.key}
+      //               onChange={this.onEndChangeHour}
+      //               label={strings.EndHourLabel}
+      //               disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
+      //               options={[
+      //                 { key: '00', text: '00' },
+      //                 { key: '01', text: '01' },
+      //                 { key: '02', text: '02' },
+      //                 { key: '03', text: '03' },
+      //                 { key: '04', text: '04' },
+      //                 { key: '05', text: '05' },
+      //                 { key: '06', text: '06' },
+      //                 { key: '07', text: '07' },
+      //                 { key: '08', text: '08' },
+      //                 { key: '09', text: '09' },
+      //                 { key: '10', text: '10' },
+      //                 { key: '11', text: '11' },
+      //                 { key: '12', text: '12' },
+      //                 { key: '13', text: '13' },
+      //                 { key: '14', text: '14' },
+      //                 { key: '15', text: '15' },
+      //                 { key: '16', text: '16' },
+      //                 { key: '17', text: '17' },
+      //                 { key: '18', text: '18' },
+      //                 { key: '19', text: '19' },
+      //                 { key: '20', text: '20' },
+      //                 { key: '21', text: '21' },
+      //                 { key: '22', text: '22' },
+      //                 { key: '23', text: '23' }
+      //               ]}
+      //             />
+      //           </div>
+      //           <div style={{ display: 'inline-block', verticalAlign: 'top', }}>
+      //             <Dropdown
+      //               label={strings.EndMinLabel}
+      //               selectedKey={this.state.endSelectedMin.key}
+      //               onChange={this.onEndChangeMin}
+      //               disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
+      //               options={[
+      //                 { key: '00', text: '00' },
+      //                 { key: '05', text: '05' },
+      //                 { key: '10', text: '10' },
+      //                 { key: '15', text: '15' },
+      //                 { key: '20', text: '20' },
+      //                 { key: '25', text: '25' },
+      //                 { key: '30', text: '30' },
+      //                 { key: '35', text: '35' },
+      //                 { key: '40', text: '40' },
+      //                 { key: '45', text: '45' },
+      //                 { key: '50', text: '50' },
+      //                 { key: '55', text: '55' },
+      //                 { key: '59', text: '59' }
+      //               ]}
+      //             />
+      //           </div>
+      //           <Label>{this.state.siteRegionalSettings ? this.state.siteRegionalSettings.Description : ''}</Label>
+      //           <br />
+      //           {
 
-                  this.state.eventData && (this.state.eventData.EventType == "0") ?
-                    <div style={{ display: 'inline-block', verticalAlign: 'top', width: '200px' }}>
-                      <Toggle
-                        defaultChecked={false}
-                        inlineLabel={true}
-                        label={ strings.ifRecurrenceLabel }
-                        onText={ strings.onLabel }
-                        offText={ strings.offLabel }
-                        onChange={(ev, checked: boolean) => {
-                          ev.preventDefault();
-                          this.setState({ showRecurrenceSeriesInfo: checked, newRecurrenceEvent: checked });
-                        }}
-                      />
-                    </div>
-                    :
-                    ''
-                }
+      //             this.state.eventData && (this.state.eventData.EventType == "0") ?
+      //               <div style={{ display: 'inline-block', verticalAlign: 'top', width: '200px' }}>
+      //                 <Toggle
+      //                   defaultChecked={false}
+      //                   inlineLabel={true}
+      //                   label={ strings.ifRecurrenceLabel }
+      //                   onText={ strings.onLabel }
+      //                   offText={ strings.offLabel }
+      //                   onChange={(ev, checked: boolean) => {
+      //                     ev.preventDefault();
+      //                     this.setState({ showRecurrenceSeriesInfo: checked, newRecurrenceEvent: checked });
+      //                   }}
+      //                 />
+      //               </div>
+      //               :
+      //               ''
+      //           }
 
-                {
-                  this.state.showRecurrenceSeriesInfo && (
-                    <EventRecurrenceInfo
-                      context={this.props.context}
-                      display={true}
-                      recurrenceData={this.state.eventData.RecurrenceData}
-                      startDate={this.state.startDate}
-                      siteUrl={this.props.siteUrl}
-                      returnRecurrenceData={this.returnRecurrenceInfo}
-                    >
+      //           {
+      //             this.state.showRecurrenceSeriesInfo && (
+      //               <EventRecurrenceInfo
+      //                 context={this.props.context}
+      //                 display={true}
+      //                 recurrenceData={this.state.eventData.RecurrenceData}
+      //                 startDate={this.state.startDate}
+      //                 siteUrl={this.props.siteUrl}
+      //                 returnRecurrenceData={this.returnRecurrenceInfo}
+      //               >
 
-                    </EventRecurrenceInfo>
-                  )
-                }
+      //               </EventRecurrenceInfo>
+      //             )
+      //           }
 
-                < Label > {strings.eventDescriptionLabel }</Label>
+      //           < Label > {strings.eventDescriptionLabel }</Label>
 
-                <div className={styles.description}>
-                  <Editor
-                    editorState={editorState}
-                    onEditorStateChange={this.onEditorStateChange}
-                    ReadOnly={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
-                  />
-                </div>
-                <div>
-                  <PeoplePicker
+      //           <div className={styles.description}>
+      //             <Editor
+      //               editorState={editorState}
+      //               onEditorStateChange={this.onEditorStateChange}
+      //               ReadOnly={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
+      //             />
+      //           </div>
+      //           <div>
+      //             <PeoplePicker
 
-                    webAbsoluteUrl={this.props.siteUrl}
-                    context={this.props.context}
-                    titleText={strings.AttendeesLabel}
-                    principalTypes={[PrincipalType.User]}
-                    resolveDelay={1000}
-                    showtooltip={true}
-                    selectedItems={this.getPeoplePickerItems}
-                    personSelectionLimit={10}
-                    defaultSelectedUsers={this.state.selectedUsers}
-                    disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    value={this.state.eventData && this.state.eventData.location ? this.state.eventData.location : ''}
-                    label={strings.LocationTextLabel}
-                    readOnly
-                    multiline />
-                </div>
-                <div>
-                  <Map titleText={strings.LocationLabel}
-                    coordinates={{ latitude: this.state.locationLatitude, longitude: this.state.locationLongitude }}
-                    enableSearch={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? true : false}
-                    onUpdateCoordinates={this.onUpdateCoordinates}
-                  />
-                </div>
-              </div>
-            }
-          </div>
-          {
-            this.state.displayDialog &&
-            <div>
-              <Dialog
-                hidden={!this.state.displayDialog}
-                dialogContentProps={{
-                  type: DialogType.normal,
-                  title: strings.DialogConfirmDeleteTitle,
-                  showCloseButton: false
-                }}
-                modalProps={{
-                  isBlocking: true,
-                  styles: { main: { maxWidth: 450 } }
-                }}
-              >
-                <Label >{strings.ConfirmeDeleteMessage}</Label>
-                {
-                  this.state.isDeleting &&
-                  <Spinner size={SpinnerSize.medium} ariaLabel={strings.SpinnerDeletingLabel} />
-                }
-                <DialogFooter>
-                  <PrimaryButton onClick={this.confirmDelete} text={strings.DialogConfirmDeleteLabel} disabled={this.state.isDeleting} />
-                  <DefaultButton onClick={this.closeDialog} text={strings.DialogCloseButtonLabel} />
-                </DialogFooter>
-              </Dialog>
-            </div>
+      //               webAbsoluteUrl={this.props.siteUrl}
+      //               context={this.props.context}
+      //               titleText={strings.AttendeesLabel}
+      //               principalTypes={[PrincipalType.User]}
+      //               resolveDelay={1000}
+      //               showtooltip={true}
+      //               selectedItems={this.getPeoplePickerItems}
+      //               personSelectionLimit={10}
+      //               defaultSelectedUsers={this.state.selectedUsers}
+      //               disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
+      //             />
+      //           </div>
+      //           <div>
+      //             <TextField
+      //               value={this.state.eventData && this.state.eventData.location ? this.state.eventData.location : ''}
+      //               label={strings.LocationTextLabel}
+      //               readOnly
+      //               multiline />
+      //           </div>
+      //           <div>
+      //             <Map titleText={strings.LocationLabel}
+      //               coordinates={{ latitude: this.state.locationLatitude, longitude: this.state.locationLongitude }}
+      //               enableSearch={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? true : false}
+      //               onUpdateCoordinates={this.onUpdateCoordinates}
+      //             />
+      //           </div>
+      //         </div>
+      //       }
+      //     </div>
+      //     {
+      //       this.state.displayDialog &&
+      //       <div>
+      //         <Dialog
+      //           hidden={!this.state.displayDialog}
+      //           dialogContentProps={{
+      //             type: DialogType.normal,
+      //             title: strings.DialogConfirmDeleteTitle,
+      //             showCloseButton: false
+      //           }}
+      //           modalProps={{
+      //             isBlocking: true,
+      //             styles: { main: { maxWidth: 450 } }
+      //           }}
+      //         >
+      //           <Label >{strings.ConfirmeDeleteMessage}</Label>
+      //           {
+      //             this.state.isDeleting &&
+      //             <Spinner size={SpinnerSize.medium} ariaLabel={strings.SpinnerDeletingLabel} />
+      //           }
+      //           <DialogFooter>
+      //             <PrimaryButton onClick={this.confirmDelete} text={strings.DialogConfirmDeleteLabel} disabled={this.state.isDeleting} />
+      //             <DefaultButton onClick={this.closeDialog} text={strings.DialogCloseButtonLabel} />
+      //           </DialogFooter>
+      //         </Dialog>
+      //       </div>
 
-          }
+      //     }
 
-        </Panel>
-      </div>
+      //   </Panel>
+      // </div>
     );
   }
 }
